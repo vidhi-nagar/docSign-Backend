@@ -58,7 +58,7 @@ app.use(
 
 //API Endpoints
 app.get("/", (req, res) => {
-  res.render("dashboard").send("API is running...");
+  res.send("API is running...");
 });
 
 app.use("/api/auth", router);

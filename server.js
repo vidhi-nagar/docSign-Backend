@@ -18,9 +18,21 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://pdf-sign-app-frontend.vercel.app", /\.vercel\.app$/], // Aapka frontend URL
+    origin: (origin, callback) => {
+      [("https://pdf-sign-app-frontend.vercel.app", /\.vercel\.app$/)];
+
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".vercel.app")
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    }, // Aapka frontend URL
     credentials: true, // Cookies allow karne ke liye
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );

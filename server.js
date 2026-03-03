@@ -18,10 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "https://pdf-sign-app-frontend.vercel.app",
-      "https://pdf-sign-app-frontend-git-main-vidhi-nagars-projects-f2385878.vercel.app",
-    ], // Aapka frontend URL
+    origin: ["https://pdf-sign-app-frontend.vercel.app", /\.vercel\.app$/], // Aapka frontend URL
     credentials: true, // Cookies allow karne ke liye
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],

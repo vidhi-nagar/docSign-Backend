@@ -7,7 +7,13 @@ import router from "./routes/authRoutes.js";
 import docRouter from "./routes/documentRoutes.js";
 import signRouter from "./routes/signRouter.js";
 
-connectDB();
+connectDB()
+  .then(() => {
+    console.log("Database Connected Successfully");
+  })
+  .catch((err) => {
+    console.log("Database Connection Failed", err);
+  });
 
 console.log("Cloud Key Check server :", process.env.CLOUD_KEY);
 

@@ -1,5 +1,5 @@
 import Document from "../models/documentModel.js";
-import Signature from "../models/signatureModel.js"; // Signature model import karein
+import Signature from "../models/SignatureModel.js"; // Signature model import karein
 import crypto from "crypto";
 import sendEmail from "./sendEmail.js";
 

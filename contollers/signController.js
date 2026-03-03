@@ -1,4 +1,4 @@
-import SignatureSchema from "../models/signatureModel.js";
+import SignatureSchema from "../models/SignatureModel.js";
 import Document from "../models/documentModel.js";
 
 export const uploadSignPdf = async (req, res) => {

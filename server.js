@@ -73,4 +73,4 @@ app.use("/api", signRouter);
 
 // app.listen(PORT, () => console.log(`Port is running on :${PORT}`));
 
-module.export = app;
+export default app;

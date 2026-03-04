@@ -71,4 +71,6 @@ app.use("/api/auth", router);
 app.use("/api/docs", docRouter);
 app.use("/api", signRouter);
 
-app.listen(PORT, () => console.log(`Port is running on :${PORT}`));
+// app.listen(PORT, () => console.log(`Port is running on :${PORT}`));
+
+module.export = app;

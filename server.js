@@ -44,7 +44,8 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: (origin, callback) => {
-      [("https://pdf-sign-app-frontend.vercel.app", /\.vercel\.app$/)];
+      ("https://doc-sign-frontend-f2dcstkx2-vidhi-nagars-projects-f2385878.vercel.app",
+        [("", /\.vercel\.app$/)]);
 
       if (
         !origin ||

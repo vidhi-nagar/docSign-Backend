@@ -57,7 +57,7 @@ app.use(
   }),
 );
 
-app.options("*", cors());
+app.options(".*", cors());
 
 //API Endpoints
 app.get("/", (req, res) => {

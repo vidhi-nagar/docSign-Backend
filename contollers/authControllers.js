@@ -1,10 +1,16 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import {
+  loginSchema,
+  signupSchema,
+} from "../../Client/src/utils/validationSchema.js";
 
 //register user
 export const register = async (req, res) => {
   const { name, password, email } = req.body;
+
+  signupSchema.safeParse(req.body);
   try {
     let user = await User.findOne({ email });
 
@@ -42,38 +48,50 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
+  loginSchema.safeParse(req.body);
+
   if (!email || !password) {
-    res.json({ success: "false", message: "Email and Password requires!" });
+    return res.json({
+      success: "false",
+      message: "Email and Password requires!",
+    });
   }
 
   try {
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.json({ success: "false", message: "Invalid email" });
+      return res.json({ success: "false", message: "Invalid email" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      res.json({ sucess: "false", message: "Invalid password " });
+      return res.json({ sucess: "false", message: "Invalid password " });
     }
 
     //Cookie check
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {});
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-    });
+    return res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      })
+      .json({
+        success: "true",
+        message: "login successfully",
+        token: token, // <-- Ye check karo, kya ye likha hai?
+        user: { id: user._id, name: user.name, email: user.email },
+      });
 
-    return res.json({
-      success: "true",
-      message: "login successfully",
-      token: token, // <-- Ye check karo, kya ye likha hai?
-      user: { id: user._id, name: user.name, email: user.email },
-    });
+    // return res.json({
+    //   success: "true",
+    //   message: "login successfully",
+    //   token: token, // <-- Ye check karo, kya ye likha hai?
+    //   user: { id: user._id, name: user.name, email: user.email },
+    // });
   } catch (error) {
     return res
       .status(500)

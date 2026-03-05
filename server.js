@@ -21,10 +21,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://doc-sign-frontend-f2dcstkx2-vidhi-nagars-projects-f2385878.vercel.app",
-  );
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header(
@@ -41,17 +38,14 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = process.env.FRONTEND_URL; // || "http://localhost:5173";
+console.log(allowedOrigins);
 app.use(
   cors({
     origin: (origin, callback) => {
-      ("https://doc-sign-frontend-f2dcstkx2-vidhi-nagars-projects-f2385878.vercel.app",
-        [("", /\.vercel\.app$/)]);
+      if (!origin) return callback(null, true);
 
-      if (
-        !origin ||
-        allowedOrigins.includes(origin) ||
-        origin.endsWith(".vercel.app")
-      ) {
+      if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
@@ -72,6 +66,6 @@ app.use("/api/auth", router);
 app.use("/api/docs", docRouter);
 app.use("/api", signRouter);
 
-// app.listen(PORT, () => console.log(`Port is running on :${PORT}`));
+app.listen(PORT, () => console.log(`Port is running on :${PORT}`));
 
-export default app;
+// export default app;

@@ -101,8 +101,7 @@ export const sendSignatureRequest = async (req, res) => {
     });
 
     // DYNAMIC LINK: Ye automatic backend environment se URL uthayega
-    const frontendBaseUrl =
-      "https://doc-sign-frontend-f2dcstkx2-vidhi-nagars-projects-f2385878.vercel.app";
+    const frontendBaseUrl = process.env.FRONTEND_URL; // || "http://localhost:5173";
     const signLink = `${frontendBaseUrl}/sign-external/${token}`;
 
     await sendEmail(recipientEmail, "Signature Required", signLink);

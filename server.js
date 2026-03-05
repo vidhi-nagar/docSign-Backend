@@ -57,6 +57,8 @@ app.use(
   }),
 );
 
+app.options("*", cors());
+
 //API Endpoints
 app.get("/", (req, res) => {
   res.send("API is running...");

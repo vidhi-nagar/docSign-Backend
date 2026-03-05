@@ -1,8 +1,8 @@
 import express from "express";
-import { uploadSignPdf } from "../contollers/signController.js";
+import { uploadSignPdf } from "../controllers/signController.js";
 import { upload } from "../middlewear/multer.js";
 import { userAuth } from "../middlewear/auth.js";
-import { getDocumentByToken } from "../contollers/documentController.js";
+import { getDocumentByToken } from "../controllers/documentController.js";
 
 const signRouter = express.Router();
 

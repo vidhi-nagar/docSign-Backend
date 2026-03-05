@@ -5,7 +5,7 @@ import {
   fetchSignedDocuments,
   sendSignatureRequest,
   uploadDocument,
-} from "../contollers/documentController.js";
+} from "../controllers/documentController.js";
 
 const docRouter = express.Router();
 

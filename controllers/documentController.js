@@ -97,8 +97,8 @@ export const sendSignatureRequest = async (req, res) => {
     // document.signingToken = token;
 
     // DB Update
-    const updatedDoc = await Document.findByIdAndUpdate(
-      documentId,
+    const updatedDoc = await Document.findOneAndUpdate(
+      { _id: documentId },
       {
         recipientEmail,
         signatureToken: token,

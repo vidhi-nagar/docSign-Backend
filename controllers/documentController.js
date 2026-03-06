@@ -86,6 +86,7 @@ export const fetchSignedDocuments = async (req, res) => {
 export const sendSignatureRequest = async (req, res) => {
   const { documentId, recipientEmail } = req.body;
 
+  console.log("Searching for Document ID:", documentId);
   console.log("REQ BODY:", req.body);
   console.log("recipientEmail:", recipientEmail);
   console.log("documentId:", documentId);

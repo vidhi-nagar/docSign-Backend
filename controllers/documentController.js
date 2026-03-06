@@ -93,6 +93,8 @@ export const sendSignatureRequest = async (req, res) => {
   try {
     const token = crypto.randomBytes(32).toString("hex");
 
+    document.signingToken = token;
+
     // DB Update
     await Document.findByIdAndUpdate(documentId, {
       recipientEmail,
@@ -100,6 +102,7 @@ export const sendSignatureRequest = async (req, res) => {
       status: "Waiting for Signature",
     });
 
+    await document.save();
     // DYNAMIC LINK: Ye automatic backend environment se URL uthayega
     const frontendBaseUrl = process.env.FRONTEND_URL; // || "http://localhost:5173";
     const signLink = `${frontendBaseUrl}/sign-external/${token}`;

@@ -28,7 +28,7 @@ const sendEmail = async (email, subject, link) => {
       subject: subject,
       html: `
         <h3>Signature Request</h3>
-        <p>Aapko ek document sign karne ke liye bheja gaya hai.</p>
+        <p>Hi,Here sending you a link for pdf sign. So,click thik link and sign the pdf.</p>
         <a href="${link}" style="padding: 10px 20px; background: blue; color: white; text-decoration: none; border-radius: 5px;">
           Sign Document Now
         </a>

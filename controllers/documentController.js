@@ -93,16 +93,25 @@ export const sendSignatureRequest = async (req, res) => {
   try {
     const token = crypto.randomBytes(32).toString("hex");
 
-    document.signingToken = token;
+    // document.signingToken = token;
 
     // DB Update
-    await Document.findByIdAndUpdate(documentId, {
-      recipientEmail,
-      signatureToken: token,
-      status: "Waiting for Signature",
-    });
+    const updateDoc = await Document.findByIdAndUpdate(
+      documentId,
+      {
+        recipientEmail,
+        signatureToken: token,
+        status: "Waiting for Signature",
+      },
+      { new: true },
+    );
 
-    await document.save();
+    if (!updatedDoc) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Document not found" });
+    }
+    // await document.save();
     // DYNAMIC LINK: Ye automatic backend environment se URL uthayega
     const frontendBaseUrl = process.env.FRONTEND_URL; // || "http://localhost:5173";
     const signLink = `${frontendBaseUrl}/sign-external/${token}`;

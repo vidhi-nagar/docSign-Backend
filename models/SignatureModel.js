@@ -9,7 +9,11 @@ const signatureSchema = new mongoose.Schema({
   signFilePath: { type: String, required: true },
   x: { type: Number, required: true },
   y: { type: Number, required: true },
-  signer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  signer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: false,
+  },
   status: { type: String, enum: ["pending", "signed"], default: "signed" },
   createdAt: { type: Date, default: Date.now },
 });

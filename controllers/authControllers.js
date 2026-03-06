@@ -17,7 +17,9 @@ import { loginSchema, signupSchema } from "../models/validationSchema.js";
 export const register = async (req, res) => {
   const { name, password, email } = req.body;
 
-  signupSchema.safeParse(req.body);
+  const result = signupSchema.safeParse(req.body);
+
+  if (!result.success) return res.status(400).json(result.error);
   try {
     let user = await User.findOne({ email });
 
@@ -55,7 +57,9 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
-  loginSchema.safeParse(req.body);
+  const result = loginSchema.safeParse(req.body);
+
+  if (!result.success) return res.status(400).json(result.error);
 
   if (!email || !password) {
     return res.json({

@@ -15,10 +15,16 @@ export const uploadSignPdf = async (req, res) => {
         .json({ success: false, message: "Signed file missing" });
     }
 
+    const finalSignerId = req.user
+      ? req.user.id
+      : signerId === "EXTERNAL USER"
+        ? null
+        : signerId;
+
     const newSign = new SignatureSchema({
       fileId: documentId,
       signFilePath: req.file.path, // Cloudinary URL
-      signer: signerId === "EXTERNAL USER" ? null : signerId,
+      signer: finalSignerId,
       x: Number(x) || 0,
       y: Number(y) || 0,
       status: "signed",
